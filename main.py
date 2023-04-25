@@ -46,10 +46,12 @@ def randomGeneration(n):
 def main():
     fig, ax = settings()
     camera = Camera(fig)
+    anim = camera.animate(interval=150)
     variant = 1
     #figure = [[0, 0], [4, 4], [-3, 4], [4, 3], [-4, 3], [-5, 5]]
-    figure = [[4, 5], [8, 0], [5, 10], [7, 5]]
-    num = 4
+    #figure = [[4, 5], [8, 0], [5, 10], [7, 5]]
+    figure = [[2, 0], [4, 2], [4, 4], [2, 6], [0, 4], [0, 2]]
+    num = len(figure)
 
 
     variant = input("Ввод из файла - 1, случайные числа - 2: ")
@@ -112,40 +114,8 @@ def main():
         ax.add_patch(Polygon(sortedMatrix, linewidth=2, fc='none', ec='black'))
         camera.snap()
 
-
-
-
-
-
-
-
-
-
-
-    anim = camera.animate(interval=500)
     anim.save("g.gif")
     plt.show()
-
-def sort_points(points):
-    # Начинаем с первой точки из списка
-    start_point = points[0]
-
-    # Находим ближайшую точку к начальной точке
-    closest_point = min(points[1:], key=lambda point: (point[0] - start_point[0])**2 + (point[1] - start_point[1])**2)
-
-    # Определяем вектор между начальной и ближайшей точками
-    vector = (closest_point[0] - start_point[0], closest_point[1] - start_point[1])
-
-    # Определяем угол между этим вектором и осью X
-    angle = math.atan2(vector[1], vector[0])
-
-    # Сортируем остальные точки по углу от начальной точки
-    sorted_points = sorted(points[1:], key=lambda point: math.atan2(point[1] - start_point[1], point[0] - start_point[0]) - angle)
-
-    # Возвращаем отсортированные точки
-    return [start_point] + sorted_points
-
-
 
 
 def sort_points1(points):
