@@ -2,25 +2,12 @@ import math
 import random
 
 import matplotlib.pyplot as plt
-import numpy as np
 from matplotlib.patches import Polygon
 from celluloid import Camera
 
 
 # figure = [[2, 0], [4, 2], [4, 4], [2, 6], [0, 4], [0, 2]]
 
-
-def NewWindow(arr):
-    fig, axes = plt.subplots()
-    plt.grid()
-    plt.xlim([-20, 20])
-    plt.ylim([-20, 20])
-
-    window_x = [arr[0], arr[0], arr[2], arr[2], arr[0]]
-    window_y = [arr[1], arr[3], arr[3], arr[1], arr[1]]
-
-    plt.plot(window_x, window_y, c='black')
-    #plt.axis('equal')
 def settings():
     fig = plt.figure()
     ax = fig.add_subplot()
@@ -36,8 +23,8 @@ def settings():
 def randomGeneration(n):
     randArr = []
     for i in range(n):
-        x = random.randint(0, 10)
-        y = random.randint(0, 10)
+        x = random.randint(-10, 10)
+        y = random.randint(-10, 10)
         randArr.append([x,y])
     print(randArr)
     return randArr
