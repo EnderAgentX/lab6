@@ -47,57 +47,57 @@ def main():
         figure = randomGeneration(num)
 
 
-    matrixDispStart = [[0.0 for j in range(2)] for i in range(num)]
-    matrixStart = [[0.0 for j in range(3)] for i in range(num)]
+    arr_change = [[0.0 for j in range(2)] for i in range(num)]
+    arr_start = [[0.0 for j in range(3)] for i in range(num)]
     for i in range(len(figure)):
         for j in range(2):
-            matrixStart[i][j] = figure[i][j]
+            arr_start[i][j] = figure[i][j]
 
 
     for i in range(num):
         for j in range(i + 1, num):
             for l in range(j + 1, num):
                 for k in range(num):
-                    if matrixStart[k][2] == 1:
-                        ax.scatter(matrixStart[k][0], matrixStart[k][1], c='red')
+                    if arr_start[k][2] == 1:
+                        ax.scatter(arr_start[k][0], arr_start[k][1], c='red')
                     else:
-                        ax.scatter(matrixStart[k][0], matrixStart[k][1], c='green')
-                ax.add_patch(Polygon([[matrixStart[i][0], matrixStart[i][1]], [matrixStart[j][0], matrixStart[j][1]], [matrixStart[l][0], matrixStart[l][1]]],linewidth=2, fc='none', ec='black'))
+                        ax.scatter(arr_start[k][0], arr_start[k][1], c='green')
+                ax.add_patch(Polygon([[arr_start[i][0], arr_start[i][1]], [arr_start[j][0], arr_start[j][1]], [arr_start[l][0], arr_start[l][1]]],linewidth=2, fc='none', ec='black'))
                 camera.snap()
 
                 for m in range(num):
                     if m == i or m == j or m == l:
                         continue
-                    if isInside(matrixStart[i][0], matrixStart[i][1], matrixStart[j][0], matrixStart[j][1],
-                                matrixStart[l][0], matrixStart[l][1], matrixStart[m][0], matrixStart[m][1]):
-                        if not (IsPointOnLine(matrixStart[i][0], matrixStart[i][1], matrixStart[j][0],
-                                              matrixStart[j][1], matrixStart[m][0], matrixStart[m][1])
-                                or IsPointOnLine(matrixStart[j][0], matrixStart[j][1], matrixStart[l][0],
-                                                 matrixStart[l][1], matrixStart[m][0], matrixStart[m][1])
-                                or IsPointOnLine(matrixStart[l][0], matrixStart[l][1], matrixStart[i][0],
-                                                 matrixStart[i][1], matrixStart[m][0], matrixStart[m][1])):
-                            matrixStart[m][2] = 1
+                    if is_out(arr_start[i][0], arr_start[i][1], arr_start[j][0], arr_start[j][1],
+                              arr_start[l][0], arr_start[l][1], arr_start[m][0], arr_start[m][1]):
+                        if not (is_on_line(arr_start[i][0], arr_start[i][1], arr_start[j][0],
+                                           arr_start[j][1], arr_start[m][0], arr_start[m][1])
+                                or is_on_line(arr_start[j][0], arr_start[j][1], arr_start[l][0],
+                                              arr_start[l][1], arr_start[m][0], arr_start[m][1])
+                                or is_on_line(arr_start[l][0], arr_start[l][1], arr_start[i][0],
+                                              arr_start[i][1], arr_start[m][0], arr_start[m][1])):
+                            arr_start[m][2] = 1
 
     for i in range(num):
-        if matrixStart[i][2] == 1:
-            ax.scatter(matrixStart[i][0], matrixStart[i][1], c='red')
+        if arr_start[i][2] == 1:
+            ax.scatter(arr_start[i][0], arr_start[i][1], c='red')
         else:
-            ax.scatter(matrixStart[i][0], matrixStart[i][1], c='green')
+            ax.scatter(arr_start[i][0], arr_start[i][1], c='green')
     camera.snap()
     finMatrix = []
     for i in range(num):
-        if matrixStart[i][2] != 1:
-            elem = [matrixStart[i][0], matrixStart[i][1]]
+        if arr_start[i][2] != 1:
+            elem = [arr_start[i][0], arr_start[i][1]]
             finMatrix.append(elem)
     print(finMatrix)
     sortedMatrix = sort_points1(finMatrix)
     print(sortedMatrix)
     for i in range(6):
         for i in range(num):
-            if matrixStart[i][2] == 1:
-                ax.scatter(matrixStart[i][0], matrixStart[i][1], c='red')
+            if arr_start[i][2] == 1:
+                ax.scatter(arr_start[i][0], arr_start[i][1], c='red')
             else:
-                ax.scatter(matrixStart[i][0], matrixStart[i][1], c='green')
+                ax.scatter(arr_start[i][0], arr_start[i][1], c='green')
         ax.add_patch(Polygon(sortedMatrix, linewidth=2, fc='none', ec='black'))
         camera.snap()
 
@@ -119,14 +119,14 @@ def sort_points1(points):
 def area(x1, y1, x2, y2, x3, y3):
     return abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0)
 
-def isInside(x1, y1, x2, y2, x3, y3, x, y):
+def is_out(x1, y1, x2, y2, x3, y3, x, y):
     A = area(x1, y1, x2, y2, x3, y3)
     A1 = area(x, y, x2, y2, x3, y3)
     A2 = area(x1, y1, x, y, x3, y3)
     A3 = area(x1, y1, x2, y2, x, y)
     return A == A1 + A2 + A3
 
-def IsPointOnLine(x1, y1, x2, y2, x, y):
+def is_on_line(x1, y1, x2, y2, x, y):
     return (y - y1) * (x2 - x1) == (y2 - y1) * (x - x1)
 
 
